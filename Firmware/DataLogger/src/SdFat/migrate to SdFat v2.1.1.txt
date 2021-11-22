@@ -1,0 +1,91 @@
+
+2021-11-06 A.Werner
+
+* remove src/SdCard folder, contains SdFat v1.1.4
+	commit 7d0261d144f4c18d81884c1fd0c8c78e1567fa80 (HEAD, tag: 1.1.4)
+	Author: Bill Greiman <fat16lib@sbcglobal.net>
+	Date:   Sat May 16 08:47:17 2020 -0700
+
+* copy F:\Arduino\libraries\SdFat\src (1) to src/SdFat
+(1) is the same as the one from https://github.com/greiman/SdFat.git, expect the .git folder
+	SD_FAT_VERSION 20101
+	SD_FAT_VERSION_STR "2.1.1"
+
+	commit fb7415151b04bd060e97de08767dff06f1c26c27 (HEAD -> master, tag: 2.1.1, origin/master, origin/HEAD)
+	Author: Bill Greiman <fat16lib@sbcglobal.net>
+	Date:   Sun Oct 31 07:11:21 2021 -0700
+
+* adapt files to the current project
+
+changes
+-------
+add task switch for Arduino (functional change)
+	.\src\SdFat\SdFatConfig.h
+		use settings for minimum flash size
+			#define USE_FAT_FILE_FLAG_CONTIGUOUS 0
+			#define ENABLE_DEDICATED_SPI 0
+			#define USE_LONG_FILE_NAMES 0
+			#define SDFAT_FILE_TYPE 1
+
+			// #elif defined( ARDUINO )
+			// #define WDT_YIELD_TIME_MILLIS 1
+
+	.\src\SdFat\SdCard\SdSpiCard.cpp(168)
+		SysCall:yield();
+
+update path to #include files
+	replace #include "SdFatConfig.h" --> #include "../SdFatConfig.h"
+		.\src\SdFat\common\ArduinoFiles.h
+		.\src\SdFat\common\BlockDevice.h
+		.\src\SdFat\common\BlockDeviceInterface.h
+		.\src\SdFat\common\DebugMacros.h
+		.\src\SdFat\common\FsApiConstants.h
+		.\src\SdFat\common\FsName.h
+		.\src\SdFat\common\SysCall.h
+		.\src\SdFat\ExFatLib\ExFatConfig.h
+		.\src\SdFat\FsLib\FsFile.h
+		.\src\SdFat\iostream\ArduinoStream.h
+
+	replace #include "ExFatLib/ExFatLib.h" --> #include "../ExFatLib/ExFatLib.h"
+		.\src\SdFat\FsLib\FsFile.h
+
+	replace #include "SdCard/SdCard.h"  --> #include "../SdCard/SdCard.h"
+		.\src\SdFat\common\BlockDevice.h
+
+	replace #include "SdCard/SdFat.h"  -- #include "SdFat/SdFat.h"
+		.\src\SdCardInfo.h
+		.\src\SdCardTask.cpp
+		.\src\WaveFile.cpp
+		.\src\WaveFile.h
+
+add debug support aweLog.h
+	.\src\SdFat\SdCard\SdSpiCard.cpp
+	.\src\SdFat\FatLib\FatFile.cpp
+	.\src\SdFat\FatLib\FatFileLFN.cpp
+	.\src\SdFat\FatLib\FatFileSFN.cpp
+	.\src\SdFat\FatLib\FatPartition.cpp
+
+replace Serial --> DbgSerial
+	.\src\SdFat\SdFat.h, 11
+	.\src\SdFat\common\DebugMacros.h, 12
+	.\src\SdFat\ExFatLib\ExFatFile.h, 2
+	.\src\SdFat\ExFatLib\ExFatVolume.h, 6
+	.\src\SdFat\FatLib\FatFile.h, 2
+	.\src\SdFat\FatLib\FatVolume.h, 4
+	.\src\SdFat\FsLib\FsFile.h, 2
+	.\src\SdFat\FsLib\FsVolume.h, 4
+	.\src\SdFat\SdCard\SdioTeensy.cpp, 47
+
+add support for DbgSerial
+	.\src\SdFat\SdFatConfig.h
+
+issues with
+	.\src\SdCardInfo.cpp
+		uint8_t dumpMBR( void )
+		void dumpVolume( void )
+		void dumpSdCardInfo( void )
+		   cardSize = sd.card()->sectorCount() * 512;
+	.\src\SdCardTask.cpp(292)
+		remove  sd.vwd()->close();
+
+

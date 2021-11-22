@@ -1,0 +1,9 @@
+(sym_lib_table
+  (lib (name power)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/aweLib/power.lib)(options "")(descr ""))
+  (lib (name Components)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/aweLib/Components.lib)(options "")(descr ""))
+  (lib (name Device)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/aweLib/Device.lib)(options "")(descr ""))
+  (lib (name Connectors)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/aweLib/Connectors.lib)(options "")(descr ""))
+  (lib (name Analog_IC)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/aweLib/Analog_IC.lib)(options "")(descr ""))
+  (lib (name Digital_IC)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/aweLib/Digital_IC.lib)(options "")(descr ""))
+  (lib (name VerySpecial)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/aweLib/VerySpecial.lib)(options "")(descr ""))
+)

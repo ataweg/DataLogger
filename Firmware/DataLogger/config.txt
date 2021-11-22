@@ -1,0 +1,13 @@
+# DataLoger configuration file
+FileName	 "capture.txt"
+FileType         txt
+FileSize         2G
+CaptureSource    SIO, A0 A3 A4, A5 D7, D6, D0, D1
+SamplingRate     1000 ms
+StartSample      "Begin"
+StopSample       "End"
+SerialBaudrate   115200
+SerialBits       8
+SerialParity     N
+SerialStopBits   1
+SystemTime       2020-07-17 08:44
